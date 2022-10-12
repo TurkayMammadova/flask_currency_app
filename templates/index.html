@@ -1,0 +1,48 @@
+
+{% extends 'base.html' %}
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+{% endblock %}
+
+{% block content %}
+    
+
+<h1 class="basliq">AZN məzənnələrin tam siyahısı</h1>
+
+
+    <table id="customers">
+     <thead>
+        <tr>
+            <th>Valyuta</th>
+            <th>Kod</th>
+            <th>{{today}}</th>
+            <th>{{yesterday}}</th>
+            <th>Status</th>
+
+
+            
+            
+        </tr>
+    </thead>
+
+    <tbody>
+    
+         {% for currency in currency_list %}
+    
+           <tr>
+               
+               <td>{{currency.name}}</td>
+               <td>{{currency.code}}</td>
+               <td>{{currency.rate_yesterday}}</td>
+               <td>{{currency.rate_today}}</td>
+               <td><i class="fa-solid {{currency.status}}"></i></td>
+               
+           </tr>
+           {% endfor %}
+    </tbody>
+    </table>
+   
+    </body>
+    </html>
+    {% endblock %}
+</div>                    

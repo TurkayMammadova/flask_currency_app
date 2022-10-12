@@ -1,0 +1,21 @@
+from flask import Flask 
+import configparser
+
+
+
+app = Flask(__name__)
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:123@10.251.86.241:3306/products_db"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["SECRET_KEY"] = "32dbaf20ae5f8f961952b9ad0269868c"
+
+
+
+
+from extensions import *
+from models import *
+from controllers import *
+
+
+if __name__ == "__main__":
+    app.run(port=5000,debug=True)
+
