@@ -4,7 +4,6 @@ from flask import Flask , render_template,request,redirect
 import requests
 import xmltodict
 from datetime import datetime, timedelta
-import pymysql
 from models import CurrencyRate, Currency
 from extensions import *
 from sqlalchemy.sql import exists 
@@ -42,6 +41,8 @@ def get_currency_list():
         currency_list.append(currency_data)
     return render_template("index.html" , currency_list=currency_list, today=today, yesterday=yesterday)
 
+    return "home"
+
 
 
 @app.route("/setRate/<date>")
@@ -59,25 +60,24 @@ def addRates(date):
             new_currency.save()
 
     return 'any'
-    
 
 
-
-# @app.route("/setrate/<date>")
-# def addRates(date):
-#     today = datetime.now().strftime("%d.%m.%Y")
-#     currency=requests.get(f'https://www.cbar.az/currencies/{date}.xml')
-#     currency_list=xmltodict.parse(currency.content)
-#     currency_list = currency_list['ValCurs']['ValType'][1]['Valute'] 
-#     for currency1 in currency_list:
-#         name = currency1['Name'] 
-#         code=currency1['@Code']
-#         status = 'any'
-#         currency = Currency( name=name,code=code, status=status)
-#         currency.save()
+@app.route("/setname")
+def addRatesNames():
+    today = datetime.now()
+    currency=requests.get(f'https://www.cbar.az/currencies/{today}.xml')
+    currency_list=xmltodict.parse(currency.content)
+    print(currency_list)
+    currency_list = currency_list['ValCurs']['ValType'][1]['Valute'] 
+    for currency1 in currency_list:
+        name = currency1['Name'] 
+        code=currency1['@Code']
+        status = 'any'
+        currency = Currency( name=name,code=code, status=status)
+        currency.save()
         
 
-#     return redirect ('/index')
+    return 'ok'
     
 
 # @app.route("/setrate")
